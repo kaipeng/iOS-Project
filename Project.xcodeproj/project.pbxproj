@@ -36,6 +36,8 @@
 		2A6E5EA616B0F81C0009072E /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A6E5EA216B0F81C0009072E /* add@2x.png */; };
 		2A79971716AE1F6500ECB64D /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2A79971616AE1F6400ECB64D /* profile.jpg */; };
 		2A79972C16B0B1FD00ECB64D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A79972A16B0B1FD00ECB64D /* MainStoryboard_iPad.storyboard */; };
+		2A884DF416B323680083F801 /* StreamItemBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A884DF316B323670083F801 /* StreamItemBox.m */; };
+		2A884DF816B324600083F801 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A884DF716B324600083F801 /* HeaderView.m */; };
 		2ACEA1A916AAB41E0088AFA2 /* A3ParallaxScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ACEA1A416AAB41E0088AFA2 /* A3ParallaxScrollView.m */; };
 		2ACEA1B316AAB4B80088AFA2 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ACEA1B216AAB4B80088AFA2 /* HomeViewController.m */; };
 		2ACEA1BF16AAB5190088AFA2 /* bg_dirt.png in Resources */ = {isa = PBXBuildFile; fileRef = 2ACEA1B516AAB5190088AFA2 /* bg_dirt.png */; };
@@ -191,6 +193,10 @@
 		2A6E5EA216B0F81C0009072E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		2A79971616AE1F6400ECB64D /* profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile.jpg; sourceTree = "<group>"; };
 		2A79972B16B0B1FD00ECB64D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		2A884DF216B323670083F801 /* StreamItemBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamItemBox.h; sourceTree = "<group>"; };
+		2A884DF316B323670083F801 /* StreamItemBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamItemBox.m; sourceTree = "<group>"; };
+		2A884DF616B324600083F801 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		2A884DF716B324600083F801 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		2ACEA1A316AAB41E0088AFA2 /* A3ParallaxScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A3ParallaxScrollView.h; sourceTree = "<group>"; };
 		2ACEA1A416AAB41E0088AFA2 /* A3ParallaxScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A3ParallaxScrollView.m; sourceTree = "<group>"; };
 		2ACEA1B116AAB4B80088AFA2 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -455,6 +461,8 @@
 		2ACEA1B016AAB4B80088AFA2 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				2A884DF216B323670083F801 /* StreamItemBox.h */,
+				2A884DF316B323670083F801 /* StreamItemBox.m */,
 				2A6E5E9616B0D1B80009072E /* PhotoBox.h */,
 				2A6E5E9716B0D1B80009072E /* PhotoBox.m */,
 				2A6E5E9316B0CFFC0009072E /* StreamViewController.h */,
@@ -463,6 +471,8 @@
 				2A6E5E9C16B0EA8D0009072E /* StreamView_iPad.xib */,
 				2ACEA1B116AAB4B80088AFA2 /* HomeViewController.h */,
 				2ACEA1B216AAB4B80088AFA2 /* HomeViewController.m */,
+				2A884DF616B324600083F801 /* HeaderView.h */,
+				2A884DF716B324600083F801 /* HeaderView.m */,
 				2ACEA1C916AAB7840088AFA2 /* StreamTableViewController.h */,
 				2ACEA1CA16AAB7840088AFA2 /* StreamTableViewController.m */,
 			);
@@ -1037,6 +1047,7 @@
 				2AE5E6EA16A794340097B6DB /* GCJsonWriter.m in Sources */,
 				2AE5E6EB16A794340097B6DB /* NSObject+GCJson.m in Sources */,
 				2ACEA1A916AAB41E0088AFA2 /* A3ParallaxScrollView.m in Sources */,
+				2A6E5E9516B0CFFD0009072E /* StreamViewController.m in Sources */,
 				2ACEA1B316AAB4B80088AFA2 /* HomeViewController.m in Sources */,
 				2ACEA1CB16AAB7840088AFA2 /* StreamTableViewController.m in Sources */,
 				2A6E5E7E16B0CADE0009072E /* NSAttributedString+MGTrim.m in Sources */,
@@ -1055,7 +1066,8 @@
 				2A6E5E8B16B0CADE0009072E /* MGScrollView.m in Sources */,
 				2A6E5E8C16B0CADE0009072E /* MGTableBox.m in Sources */,
 				2A6E5E8D16B0CADE0009072E /* MGTableBoxStyled.m in Sources */,
-				2A6E5E9516B0CFFD0009072E /* StreamViewController.m in Sources */,
+				2A884DF416B323680083F801 /* StreamItemBox.m in Sources */,
+				2A884DF816B324600083F801 /* HeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

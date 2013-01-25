@@ -8,10 +8,12 @@
 @class MGScrollView, PhotoBox;
 
 #import <UIKit/UIKit.h>
+//#import "HomeViewController.h"
 
-@interface StreamViewController : UIViewController
+@interface StreamViewController : UIViewController<UIScrollViewDelegate>
 
-@property (nonatomic, weak) IBOutlet MGScrollView *scroller;
+@property (nonatomic, strong) IBOutlet MGScrollView *scroller;
 - (PhotoBox *)photoAddBox;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentScrollView:(UIScrollView *)psv headerScrollView:(UIScrollView *)hsv headerHeight:(int)hH navBarHeight:(int)nbh;
 @end

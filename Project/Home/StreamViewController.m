@@ -18,14 +18,14 @@
 
 #define ROW_SIZE               (CGSize){304, 44}
 
-#define IPHONE_PORTRAIT_PHOTO  (CGSize){90, 90}
+#define IPHONE_PORTRAIT_PHOTO  (CGSize){300, 300}
 #define IPHONE_LANDSCAPE_PHOTO (CGSize){152, 152}
 
 #define IPHONE_PORTRAIT_GRID   (CGSize){312, 0}
 #define IPHONE_LANDSCAPE_GRID  (CGSize){160, 0}
 //#define IPHONE_TABLES_GRID     (CGSize){320, 0}
 
-#define IPAD_PORTRAIT_PHOTO    (CGSize){760, 760}
+#define IPAD_PORTRAIT_PHOTO    (CGSize){400, 400}
 #define IPAD_LANDSCAPE_PHOTO   (CGSize){760, 760}
 
 #define IPAD_PORTRAIT_GRID     (CGSize){760, 0}
@@ -41,32 +41,71 @@
 @implementation StreamViewController{
     MGBox *photosGrid;
     BOOL phone;
+    UIScrollView *headerScrollView, *parentScrollView;
+    int headerHeight, navBarHeight;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil parentScrollView:(UIScrollView *)psv headerScrollView:(UIScrollView *)hsv headerHeight:(int)hH navBarHeight:(int)nbh
 {
+    parentScrollView = psv;
+    headerScrollView = hsv;
+    headerHeight = hH;
+    navBarHeight = nbh;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
 }
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView{
+    parentScrollView.scrollEnabled = NO;
+    if(aScrollView.contentOffset.y < headerHeight){
+        if(aScrollView.contentOffset.y>=0){
+
+            [headerScrollView setFrame:CGRectMake(0, -MIN(headerHeight-navBarHeight, aScrollView.contentOffset.y), headerScrollView.frame.size.width, headerScrollView.frame.size.height)];
+        }
+        else{
+            [headerScrollView setFrame:CGRectMake(0, MIN(0, aScrollView.contentOffset.y), headerScrollView.frame.size.width, headerHeight+10-2*MIN(0, aScrollView.contentOffset.y))];
+            [headerScrollView setContentOffset:CGPointMake(headerScrollView.contentOffset.x, 2*aScrollView.contentOffset.y)];
+        }
+    }
+    NSLog(@"Set header to to y: %f",-MIN(headerHeight, aScrollView.contentOffset.y));
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    parentScrollView.scrollEnabled = NO;
+    NSLog(@"Scrolled: %s","SCROLL OFF");
+
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    parentScrollView.scrollEnabled = YES;
+    NSLog(@"Scrolled: %s","SCROLL ON");
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    parentScrollView.scrollEnabled = YES;
+    NSLog(@"Scrolled: %s","SCROLL ON");
+}
+
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.scroller.directionalLockEnabled = YES;
+    self.scroller.delegate = self;
 	// Do any additional setup after loading the view.
     // iPhone or iPad?
     UIDevice *device = UIDevice.currentDevice;
     phone = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone;
-    
     // setup the main scroller (using a grid layout)
     self.scroller.contentLayoutMode = MGLayoutGridStyle;
     self.scroller.bottomPadding = 8;
     UIImage *dirtImage = [UIImage imageNamed:@"bg_dirt.png"];
     // add background dirt image
-    self.scroller.backgroundColor = [UIColor whiteColor];
-    //self.scroller.topMargin =
+    self.scroller.backgroundColor = [UIColor colorWithPatternImage:dirtImage];
+    self.scroller.topPadding = headerHeight;
     
     // iPhone or iPad grid?
     CGSize photosGridSize = phone ? IPHONE_PORTRAIT_GRID : IPAD_PORTRAIT_GRID;
@@ -94,6 +133,7 @@
     [self willAnimateRotationToInterfaceOrientation:self.interfaceOrientation
                                            duration:1];
     [self didRotateFromInterfaceOrientation:UIInterfaceOrientationPortrait];
+    //[parentScroller setContentOffset:CGPointMake(parentScroller.contentOffset.x, MIN(headerHeight-65, self.scroller.contentOffset.y)) animated:YES];
 }
 
 #pragma mark - Rotation and resizing
