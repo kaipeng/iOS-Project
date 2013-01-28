@@ -12,6 +12,8 @@
 #import "StreamViewController.h"
 #import "MGScrollView.h"
 #import "HeaderView.h"
+#import "LoginViewController.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 

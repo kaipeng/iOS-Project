@@ -38,6 +38,9 @@
 		2A79972C16B0B1FD00ECB64D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A79972A16B0B1FD00ECB64D /* MainStoryboard_iPad.storyboard */; };
 		2A884DF416B323680083F801 /* StreamItemBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A884DF316B323670083F801 /* StreamItemBox.m */; };
 		2A884DF816B324600083F801 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A884DF716B324600083F801 /* HeaderView.m */; };
+		2A884DFC16B33F200083F801 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A884DFB16B33F200083F801 /* LoginViewController.m */; };
+		2A884DFE16B33F5D0083F801 /* LoginView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A884DFD16B33F5D0083F801 /* LoginView_iPhone.xib */; };
+		2A884E0016B33FA50083F801 /* LoginView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A884DFF16B33FA50083F801 /* LoginView_iPad.xib */; };
 		2ACEA1A916AAB41E0088AFA2 /* A3ParallaxScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ACEA1A416AAB41E0088AFA2 /* A3ParallaxScrollView.m */; };
 		2ACEA1B316AAB4B80088AFA2 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ACEA1B216AAB4B80088AFA2 /* HomeViewController.m */; };
 		2ACEA1BF16AAB5190088AFA2 /* bg_dirt.png in Resources */ = {isa = PBXBuildFile; fileRef = 2ACEA1B516AAB5190088AFA2 /* bg_dirt.png */; };
@@ -197,6 +200,10 @@
 		2A884DF316B323670083F801 /* StreamItemBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamItemBox.m; sourceTree = "<group>"; };
 		2A884DF616B324600083F801 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
 		2A884DF716B324600083F801 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		2A884DFA16B33F200083F801 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Project/Login/LoginViewController.h; sourceTree = SOURCE_ROOT; };
+		2A884DFB16B33F200083F801 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Project/Login/LoginViewController.m; sourceTree = SOURCE_ROOT; };
+		2A884DFD16B33F5D0083F801 /* LoginView_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView_iPhone.xib; sourceTree = "<group>"; };
+		2A884DFF16B33FA50083F801 /* LoginView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView_iPad.xib; sourceTree = "<group>"; };
 		2ACEA1A316AAB41E0088AFA2 /* A3ParallaxScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A3ParallaxScrollView.h; sourceTree = "<group>"; };
 		2ACEA1A416AAB41E0088AFA2 /* A3ParallaxScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A3ParallaxScrollView.m; sourceTree = "<group>"; };
 		2ACEA1B116AAB4B80088AFA2 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -449,6 +456,18 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		2A884DF916B33D110083F801 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2A884DFA16B33F200083F801 /* LoginViewController.h */,
+				2A884DFB16B33F200083F801 /* LoginViewController.m */,
+				2A884DFD16B33F5D0083F801 /* LoginView_iPhone.xib */,
+				2A884DFF16B33FA50083F801 /* LoginView_iPad.xib */,
+			);
+			name = Login;
+			path = Images;
+			sourceTree = "<group>";
+		};
 		2ACEA1A216AAB41E0088AFA2 /* A3ParallaxScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +480,8 @@
 		2ACEA1B016AAB4B80088AFA2 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				2ACEA1B116AAB4B80088AFA2 /* HomeViewController.h */,
+				2ACEA1B216AAB4B80088AFA2 /* HomeViewController.m */,
 				2A884DF216B323670083F801 /* StreamItemBox.h */,
 				2A884DF316B323670083F801 /* StreamItemBox.m */,
 				2A6E5E9616B0D1B80009072E /* PhotoBox.h */,
@@ -469,8 +490,6 @@
 				2A6E5E9416B0CFFC0009072E /* StreamViewController.m */,
 				2A6E5E9A16B0E85C0009072E /* StreamView_iPhone.xib */,
 				2A6E5E9C16B0EA8D0009072E /* StreamView_iPad.xib */,
-				2ACEA1B116AAB4B80088AFA2 /* HomeViewController.h */,
-				2ACEA1B216AAB4B80088AFA2 /* HomeViewController.m */,
 				2A884DF616B324600083F801 /* HeaderView.h */,
 				2A884DF716B324600083F801 /* HeaderView.m */,
 				2ACEA1C916AAB7840088AFA2 /* StreamTableViewController.h */,
@@ -548,6 +567,7 @@
 		2AE5E5F216A794130097B6DB /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				2A884DF916B33D110083F801 /* Login */,
 				2ACEA1B416AAB5190088AFA2 /* Images */,
 				2ACEA1B016AAB4B80088AFA2 /* Home */,
 				2AE5E5FB16A794130097B6DB /* AppDelegate.h */,
@@ -956,6 +976,8 @@
 				2A6E5EA416B0F81C0009072E /* arrow@2x.png in Resources */,
 				2A6E5EA516B0F81C0009072E /* add.png in Resources */,
 				2A6E5EA616B0F81C0009072E /* add@2x.png in Resources */,
+				2A884DFE16B33F5D0083F801 /* LoginView_iPhone.xib in Resources */,
+				2A884E0016B33FA50083F801 /* LoginView_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1068,6 +1090,7 @@
 				2A6E5E8D16B0CADE0009072E /* MGTableBoxStyled.m in Sources */,
 				2A884DF416B323680083F801 /* StreamItemBox.m in Sources */,
 				2A884DF816B324600083F801 /* HeaderView.m in Sources */,
+				2A884DFC16B33F200083F801 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

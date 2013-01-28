@@ -45,6 +45,15 @@ static int yAccel = 1;
     [self.view removeGestureRecognizer:gestureRecognizer];
 }
 
+
+- (void) viewDidAppear:(BOOL)animated {
+    UIDevice *device = UIDevice.currentDevice;
+    phone = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone;
+    NSString *viewNibName = phone ? @"LoginView_iPhone" : @"LoginView_iPad";
+    LoginViewController* loginViewController = [[LoginViewController alloc] initWithNibName:viewNibName bundle:nil];
+    [self presentModalViewController:loginViewController animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -213,9 +222,6 @@ static int yAccel = 1;
 
 }
 
-
-- (void)viewWillAppear:(BOOL)animated{
-}
 
 - (void)didReceiveMemoryWarning
 {
