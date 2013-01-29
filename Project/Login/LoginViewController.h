@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "HeaderView.h"
+#import <Parse/Parse.h>
+#import "UserSetupViewController.h"
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
@@ -20,6 +22,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signInFacebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+- (IBAction)passwordChanged:(id)sender;
+- (IBAction)signInPushed:(id)sender;
+- (IBAction)facebookSignInPushed:(id)sender;
+
+- (void) signUp;
+- (void) logIn;
+- (void) fbLogIn;
 
 @end

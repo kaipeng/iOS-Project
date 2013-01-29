@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A03A3D816B726AF006A2B33 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3D716B726AF006A2B33 /* Parse.framework */; };
+		2A03A3DB16B726FC006A2B33 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3DA16B726FC006A2B33 /* AudioToolbox.framework */; };
+		2A03A3DD16B72701006A2B33 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3DC16B72701006A2B33 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2A03A3DF16B72705006A2B33 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3DE16B72705006A2B33 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2A03A3E116B72717006A2B33 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3E016B72717006A2B33 /* CoreLocation.framework */; };
+		2A03A3E316B7272A006A2B33 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3E216B7272A006A2B33 /* libsqlite3.dylib */; };
+		2A03A3E516B72735006A2B33 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3E416B72735006A2B33 /* libz.1.1.3.dylib */; };
+		2A03A3E716B7274A006A2B33 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3E616B7274A006A2B33 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		2A03A3E916B72753006A2B33 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A03A3E816B72753006A2B33 /* StoreKit.framework */; };
+		2A03A3F216B75F28006A2B33 /* UserSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A03A3F016B75F27006A2B33 /* UserSetupViewController.m */; };
+		2A03A3F316B75F28006A2B33 /* UserSetupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03A3F116B75F27006A2B33 /* UserSetupView.xib */; };
 		2A6E5E7E16B0CADE0009072E /* NSAttributedString+MGTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6E5E5D16B0CADE0009072E /* NSAttributedString+MGTrim.m */; };
 		2A6E5E7F16B0CADE0009072E /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6E5E5F16B0CADE0009072E /* NSObject+MGEvents.m */; };
 		2A6E5E8016B0CADE0009072E /* UIColor+MGExpanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6E5E6116B0CADE0009072E /* UIColor+MGExpanded.m */; };
@@ -148,6 +159,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A03A3D716B726AF006A2B33 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		2A03A3DA16B726FC006A2B33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2A03A3DC16B72701006A2B33 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		2A03A3DE16B72705006A2B33 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		2A03A3E016B72717006A2B33 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2A03A3E216B7272A006A2B33 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2A03A3E416B72735006A2B33 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		2A03A3E616B7274A006A2B33 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		2A03A3E816B72753006A2B33 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2A03A3EF16B75F27006A2B33 /* UserSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSetupViewController.h; path = Project/Login/UserSetupViewController.h; sourceTree = SOURCE_ROOT; };
+		2A03A3F016B75F27006A2B33 /* UserSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSetupViewController.m; path = Project/Login/UserSetupViewController.m; sourceTree = SOURCE_ROOT; };
+		2A03A3F116B75F27006A2B33 /* UserSetupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserSetupView.xib; path = Project/Login/UserSetupView.xib; sourceTree = SOURCE_ROOT; };
 		2A6E5E5C16B0CADE0009072E /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
 		2A6E5E5D16B0CADE0009072E /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
 		2A6E5E5E16B0CADE0009072E /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
@@ -378,19 +401,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A03A3E916B72753006A2B33 /* StoreKit.framework in Frameworks */,
+				2A03A3E716B7274A006A2B33 /* Social.framework in Frameworks */,
+				2AE5E6F516A797300097B6DB /* MobileCoreServices.framework in Frameworks */,
+				2A03A3E516B72735006A2B33 /* libz.1.1.3.dylib in Frameworks */,
+				2A03A3E316B7272A006A2B33 /* libsqlite3.dylib in Frameworks */,
+				2A03A3E116B72717006A2B33 /* CoreLocation.framework in Frameworks */,
+				2AE5E5F116A794130097B6DB /* CoreGraphics.framework in Frameworks */,
+				2AE5E6EF16A797100097B6DB /* CFNetwork.framework in Frameworks */,
+				2A03A3DF16B72705006A2B33 /* AdSupport.framework in Frameworks */,
+				2A03A3DD16B72701006A2B33 /* Accounts.framework in Frameworks */,
+				2A03A3DB16B726FC006A2B33 /* AudioToolbox.framework in Frameworks */,
 				2A6E5E9216B0CC2B0009072E /* CoreText.framework in Frameworks */,
 				2A6E5E9016B0CC000009072E /* QuartzCore.framework in Frameworks */,
 				2AE5E6FB16A797420097B6DB /* libz.dylib in Frameworks */,
 				2AE5E6F916A7973B0097B6DB /* SystemConfiguration.framework in Frameworks */,
 				2AE5E6F716A797360097B6DB /* Security.framework in Frameworks */,
-				2AE5E6F516A797300097B6DB /* MobileCoreServices.framework in Frameworks */,
 				2AE5E6F316A7972A0097B6DB /* MessageUI.framework in Frameworks */,
 				2AE5E6F116A797160097B6DB /* EventKit.framework in Frameworks */,
 				2AE5E6ED16A797080097B6DB /* AssetsLibrary.framework in Frameworks */,
 				2AE5E5EF16A794130097B6DB /* Foundation.framework in Frameworks */,
-				2AE5E6EF16A797100097B6DB /* CFNetwork.framework in Frameworks */,
 				2AE5E5ED16A794130097B6DB /* UIKit.framework in Frameworks */,
-				2AE5E5F116A794130097B6DB /* CoreGraphics.framework in Frameworks */,
+				2A03A3D816B726AF006A2B33 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +491,9 @@
 		2A884DF916B33D110083F801 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				2A03A3EF16B75F27006A2B33 /* UserSetupViewController.h */,
+				2A03A3F016B75F27006A2B33 /* UserSetupViewController.m */,
+				2A03A3F116B75F27006A2B33 /* UserSetupView.xib */,
 				2A884DFA16B33F200083F801 /* LoginViewController.h */,
 				2A884DFB16B33F200083F801 /* LoginViewController.m */,
 				2A884DFD16B33F5D0083F801 /* LoginView_iPhone.xib */,
@@ -546,6 +581,15 @@
 		2AE5E5EB16A794130097B6DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2A03A3E816B72753006A2B33 /* StoreKit.framework */,
+				2A03A3E616B7274A006A2B33 /* Social.framework */,
+				2A03A3E416B72735006A2B33 /* libz.1.1.3.dylib */,
+				2A03A3E216B7272A006A2B33 /* libsqlite3.dylib */,
+				2A03A3E016B72717006A2B33 /* CoreLocation.framework */,
+				2A03A3DE16B72705006A2B33 /* AdSupport.framework */,
+				2A03A3DC16B72701006A2B33 /* Accounts.framework */,
+				2A03A3DA16B726FC006A2B33 /* AudioToolbox.framework */,
+				2A03A3D716B726AF006A2B33 /* Parse.framework */,
 				2AE5E6FA16A797420097B6DB /* libz.dylib */,
 				2AE5E6F816A7973B0097B6DB /* SystemConfiguration.framework */,
 				2AE5E6F616A797360097B6DB /* Security.framework */,
@@ -978,6 +1022,7 @@
 				2A6E5EA616B0F81C0009072E /* add@2x.png in Resources */,
 				2A884DFE16B33F5D0083F801 /* LoginView_iPhone.xib in Resources */,
 				2A884E0016B33FA50083F801 /* LoginView_iPad.xib in Resources */,
+				2A03A3F316B75F28006A2B33 /* UserSetupView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1136,7 @@
 				2A884DF416B323680083F801 /* StreamItemBox.m in Sources */,
 				2A884DF816B324600083F801 /* HeaderView.m in Sources */,
 				2A884DFC16B33F200083F801 /* LoginViewController.m in Sources */,
+				2A03A3F216B75F28006A2B33 /* UserSetupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1250,10 @@
 		2AE5E62516A794130097B6DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Project/Project-Prefix.pch";
 				INFOPLIST_FILE = "Project/Project-Info.plist";
@@ -1216,6 +1266,10 @@
 		2AE5E62616A794130097B6DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Project/Project-Prefix.pch";
 				INFOPLIST_FILE = "Project/Project-Info.plist";

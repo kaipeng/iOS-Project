@@ -60,22 +60,34 @@
     nameField.delegate = self;
     usernameField.delegate = self;
     passwordfield.delegate = self;
-    self.view.backgroundColor=[UIColor blueColor];
+    //self.view.backgroundColor=[UIColor blueColor];
 }
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     [self.view addGestureRecognizer:gestureRecognizer];
     //scroll up
-    self.view.frame = CGRectMake(0, -100, self.view.frame.size.width, self.view.frame.size.height);
-    return true;
+    self.view.frame = CGRectMake(0, -50, self.view.frame.size.width, self.view.frame.size.height);
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self.view removeGestureRecognizer:gestureRecognizer];
+    self.view.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height);
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+
+    if(textField == nameField)
+        [usernameField becomeFirstResponder];
+    if(textField == usernameField)
+        [passwordfield becomeFirstResponder];
+    if(textField == passwordfield){
+        [self signInPushed:nil];
+        [textField resignFirstResponder];
+    }
+    return NO;
 }
 
 - (void) hideKeyboard {
     [usernameField resignFirstResponder];
     [nameField resignFirstResponder];
     [passwordfield resignFirstResponder];
-    [self.view removeGestureRecognizer:gestureRecognizer];
-    self.view.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height);
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +103,121 @@
     [self setSignInFacebookButton:nil];
     [self setForgotPasswordButton:nil];
     [self setNameField:nil];
+    [self setActivityIndicator:nil];
     [super viewDidUnload];
+}
+- (IBAction)passwordChanged:(id)sender {
+}
+
+
+- (IBAction)signInPushed:(id)sender {
+    [self logIn];
+    /*PFQuery *query = [PFQuery queryWithClassName:@"UserLoginActionObject"];
+    [query whereKey:@"email" equalTo:usernameField.text];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Error: email '%@' already exists %i time(s)", usernameField.text, objects.count);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"User Already Exists"
+                                                            message:@"An account has already been associated with this email. If it's yours, reset your password with <Forgot Password?>"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            //POPUP
+        } else {
+            // Log details of the failure
+            NSLog(@"New user to be created: %@", usernameField.text);
+            PFObject *userLoginActionObject = [PFObject objectWithClassName:@"UserLoginActionObject"];
+            [userLoginActionObject setObject:usernameField.text forKey:@"email"];
+            [userLoginActionObject setObject:passwordfield.text forKey:@"password"];
+            [userLoginActionObject saveInBackground];
+        }
+    }];
+     */
+}
+
+- (void) fbLogIn  {
+    [_activityIndicator startAnimating];
+    // The permissions requested from the user
+    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+    
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        [_activityIndicator stopAnimating]; // Hide loading indicator
+        
+        if (!user) {
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+            }
+        } else if (user.isNew) {
+            NSLog(@"User with facebook signed up and logged in!");
+            [self.navigationController pushViewController:[[UserSetupViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+        } else {
+            NSLog(@"User with facebook logged in!");
+            //[self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+        }
+    }];
+}
+
+- (void) logIn {
+    [PFUser logInWithUsernameInBackground:usernameField.text password:passwordfield.text
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            // Do stuff after successful login.
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Succeeded"
+                                                                                            message:[NSString stringWithFormat:@"Logged in as: %@", user.username]
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:@"OK"
+                                                                                  otherButtonTitles:nil];
+                                            [alert show];
+                                        } else {
+                                            // The login failed. Check error to see why.
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Failed"
+                                                                                            message:error.description
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:@"OK"
+                                                                                  otherButtonTitles:nil];
+                                            [alert show];
+
+                                        }
+                                    }];
+}
+
+- (void) signUp {
+    PFUser *user = [PFUser user];
+    user.username = usernameField.text;
+    user.password = passwordfield.text;
+    user.email = usernameField.text;
+    
+    // other fields can be set just like with PFObject
+    //[user setObject:@"415-392-0202" forKey:@"phone"];
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            // Hooray! Let them use the app now.
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign Up Succeeded"
+                                                            message:[NSString stringWithFormat:@"Logged in as: %@", user.username]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        } else {
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            // Show the errorString somewhere and let the user try again.
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign Up Failed"
+                                                            message:[NSString stringWithFormat:@"Error: %@", errorString]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+}
+
+- (IBAction)facebookSignInPushed:(id)sender {
+    [self fbLogIn];
 }
 @end

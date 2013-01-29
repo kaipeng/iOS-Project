@@ -7,13 +7,25 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Parse Key
+    [Parse setApplicationId:@"tM2CdZHRTY3h1IAO6V5Jvx302QZ2tOwc2pTP3OcJ"
+                  clientKey:@"iu0a3ad7xECja3UTI5a5UAutK1yikgX06V475YcW"];
+    [Parse setFacebookApplicationId:@"1689168524555469"];
     // Override point for customization after application launch.
     return YES;
+}
+
+//For FB SSO
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
