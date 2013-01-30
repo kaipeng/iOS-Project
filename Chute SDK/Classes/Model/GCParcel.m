@@ -165,8 +165,14 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
 - (BOOL) uploadAssetToS3:(GCAsset *) anAsset withToken:(NSDictionary *) _token {
     //Arc Fix
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    __block NSMutableData* _imageData = [UIImageJPEGRepresentation([UIImage imageWithCGImage:[[anAsset.alAsset defaultRepresentation] fullResolutionImage] scale:1 orientation:[[anAsset.alAsset valueForProperty:ALAssetPropertyOrientation] intValue]], 1.0) mutableCopy];
+    float compression = [anAsset compression];
+    if(compression == 0) compression = 1.0;
+    __block NSMutableData* _imageData;
+    if(![anAsset image]){
+        _imageData = [UIImageJPEGRepresentation([UIImage imageWithCGImage:[[anAsset.alAsset defaultRepresentation] fullResolutionImage] scale:1 orientation:[[anAsset.alAsset valueForProperty:ALAssetPropertyOrientation] intValue]], compression) mutableCopy];
+    }else{
+        _imageData = [UIImageJPEGRepresentation([anAsset image], compression) mutableCopy];
+    }
     if(!_imageData && [anAsset objectID]){
         //Arc Fix
         [pool release];
@@ -185,7 +191,7 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
         [library assetForURL:[NSURL URLWithString:assetURL] resultBlock:^(ALAsset* _alasset){
             //Arc Fix
 //            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            _imageData = [UIImageJPEGRepresentation([UIImage imageWithCGImage:[[_alasset defaultRepresentation] fullResolutionImage] scale:1 orientation:[[anAsset.alAsset valueForProperty:ALAssetPropertyOrientation] intValue]], 1.0) mutableCopy];
+            _imageData = [UIImageJPEGRepresentation([UIImage imageWithCGImage:[[_alasset defaultRepresentation] fullResolutionImage] scale:1 orientation:[[anAsset.alAsset valueForProperty:ALAssetPropertyOrientation] intValue]], compression) mutableCopy];
             
             ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[_token objectForKey:@"upload_url"]]];
             [request setUploadProgressDelegate:anAsset];

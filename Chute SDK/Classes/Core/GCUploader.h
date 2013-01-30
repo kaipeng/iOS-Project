@@ -30,8 +30,8 @@ NSString * const GCUploaderFinished;
 - (void) backupQueueToUserDefaults;
 - (void) loadQueueFromUserDefaults;
 
-+ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute;
-+ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute;
++ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression;
++ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute:(Boolean)save withCompression:(float)compression;
 + (void) uploadAsset:(GCAsset*)asset toChute:(GCChute*)chute;
 + (void) uploadArrayOfAssets:(NSArray*)assets toChute:(GCChute*)chute;
 

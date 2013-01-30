@@ -30,6 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
 	// Do any additional setup after loading the view.
     /*
     int screenWidth = self.view.frame.size.width;
@@ -111,6 +113,8 @@
 
 
 - (IBAction)signInPushed:(id)sender {
+    [_activityIndicator startAnimating];
+
     [self logIn];
     /*PFQuery *query = [PFQuery queryWithClassName:@"UserLoginActionObject"];
     [query whereKey:@"email" equalTo:usernameField.text];
@@ -138,9 +142,8 @@
 }
 
 - (void) fbLogIn  {
-    [_activityIndicator startAnimating];
     // The permissions requested from the user
-    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+    NSArray *permissionsArray = @[ @"user_about_me", @"email", @"user_relationships", @"user_birthday", @"user_location"];
     
     // Login PFUser using Facebook
     [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
@@ -154,12 +157,51 @@
             }
         } else if (user.isNew) {
             NSLog(@"User with facebook signed up and logged in!");
-            [self.navigationController pushViewController:[[UserSetupViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+            [self setUserInfo];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self presentModalViewController:[[UserSetupViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+            }];
         } else {
             NSLog(@"User with facebook logged in!");
-            //[self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+            [self setUserInfo];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
+
+}
+
+- (void) setUserInfo {
+    NSString *requestPath = @"me/?fields=name,email,location,education,work";
+    PF_FBRequest *request = [PF_FBRequest requestForGraphPath:requestPath];
+    [request startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+            // handle successful response
+            NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
+            NSLog(@"User Info Retrieved: %@", userData.descriptionInStringsFileFormat);
+            
+            [[PFUser currentUser] setEmail:userData[@"email"]];
+            [[PFUser currentUser] setUsername:userData[@"email"]];
+            [[PFUser currentUser] setObject:userData[@"location"][@"name"] forKey:@"location"];
+            [[PFUser currentUser] setObject:userData[@"name"] forKey:@"name"];
+            [[PFUser currentUser] setObject:userData[@"education"] forKey:@"education"];
+            [[PFUser currentUser] setObject:userData[@"work"] forKey:@"work"];
+            [[PFUser currentUser] save];
+            
+            PFQuery *query = [PFUser query];
+            [query whereKey:@"username" equalTo:[[PFUser currentUser] username]];
+            NSArray *usersData = [query findObjects];
+            NSLog(@"User Info Retrieved: %@ %@", [usersData[0] username], [usersData[0] email]);
+        } else {
+            NSLog(@"Some error: %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Setting User Info Failed"
+                                                            message:error
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+
 }
 
 - (void) logIn {
@@ -172,7 +214,11 @@
                                                                                            delegate:nil
                                                                                   cancelButtonTitle:@"OK"
                                                                                   otherButtonTitles:nil];
+                                            
+                                            [_activityIndicator stopAnimating]; // Hide loading indicator
                                             [alert show];
+                                            [self dismissViewControllerAnimated:YES completion:nil];
+
                                         } else {
                                             // The login failed. Check error to see why.
                                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Failed"
@@ -180,10 +226,11 @@
                                                                                            delegate:nil
                                                                                   cancelButtonTitle:@"OK"
                                                                                   otherButtonTitles:nil];
+                                            [_activityIndicator stopAnimating]; // Hide loading indicator
                                             [alert show];
-
                                         }
                                     }];
+
 }
 
 - (void) signUp {
@@ -198,12 +245,9 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             // Hooray! Let them use the app now.
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign Up Succeeded"
-                                                            message:[NSString stringWithFormat:@"Logged in as: %@", user.username]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self presentModalViewController:[[UserSetupViewController alloc] initWithStyle:UITableViewStyleGrouped] animated:YES];
+            }];
         } else {
             NSString *errorString = [[error userInfo] objectForKey:@"error"];
             // Show the errorString somewhere and let the user try again.
@@ -218,6 +262,7 @@
 }
 
 - (IBAction)facebookSignInPushed:(id)sender {
+    [_activityIndicator startAnimating];
     [self fbLogIn];
 }
 @end

@@ -19,6 +19,9 @@
                   clientKey:@"iu0a3ad7xECja3UTI5a5UAutK1yikgX06V475YcW"];
     [Parse setFacebookApplicationId:@"1689168524555469"];
     // Override point for customization after application launch.
+    //[PFUser logOut];
+    [[GCAccount sharedManager] reset];
+
     return YES;
 }
 

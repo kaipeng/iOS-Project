@@ -17,7 +17,7 @@
 @property  int screenWidth;
 @property  int pageCount;
 @property  int screenHeight;
-@property (retain) UIScrollView *parentScrollview;
+@property (strong) UIScrollView *parentScrollview;
 
 
 - (id) initWithFrame:(CGRect)frame headerHeight:(int)headerHeight headerScale:(int)headerSize screenWidth:(int)screenWidth screenHeight:(int)screenHeight pageCount:(int)pageCount parentScrollView:(UIScrollView*)parentView;

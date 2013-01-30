@@ -46,13 +46,7 @@ static int yAccel = 1;
 }
 
 
-- (void) viewDidAppear:(BOOL)animated {
-    UIDevice *device = UIDevice.currentDevice;
-    phone = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone;
-    NSString *viewNibName = phone ? @"LoginView_iPhone" : @"LoginView_iPad";
-    LoginViewController* loginViewController = [[LoginViewController alloc] initWithNibName:viewNibName bundle:nil];
-    [self presentModalViewController:loginViewController animated:YES];
-}
+
 
 - (void)viewDidLoad
 {
@@ -142,7 +136,7 @@ static int yAccel = 1;
     for(int i = 0; i < 4; i++){
         CGRect buttonFrame = CGRectMake(i*SCREEN_WIDTH/scrollViewWidthMultiplier, tabLabelY, SCREEN_WIDTH/scrollViewWidthMultiplier+22, 40);
         UIButton *tabButton = [[UIButton alloc] initWithFrame:buttonFrame];
-        NSLog(@"Button Seletor: goToTab_%i:",i);
+        //NSLog(@"Button Seletor: goToTab_%i:",i);
         [tabButton addTarget:self action:NSSelectorFromString([NSString stringWithFormat:@"goToTab_%i:",i]) forControlEvents:(UIControlEvents) UIControlEventTouchUpInside];
         UILabel *labelText = [[UILabel alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH/scrollViewWidthMultiplier+22, 40)];
         [tabButton addSubview:labelText];

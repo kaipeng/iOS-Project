@@ -21,6 +21,9 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
 @synthesize progress;
 @synthesize status;
 @synthesize parentID;
+@synthesize image;
+@synthesize compression;
+
 
 // Public: Checks whether or not the asset has been hearted
 //
@@ -112,7 +115,7 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
 //
 // Returns a GCResponse with it's object set to an array of dictionaries with info for each matching asset.
 -(GCResponse*)verify{
-    if(![self alAsset]){
+    if(![self alAsset] || ![self image]){
         GCResponse *response = [[GCResponse alloc] init];
         NSMutableDictionary *_errorDetail = [NSMutableDictionary dictionary];
         [_errorDetail setValue:@"No asset info to to send" forKey:NSLocalizedDescriptionKey];
@@ -213,6 +216,20 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
         }
         return [NSDictionary dictionaryWithDictionary:dictionary];
     }
+    if([self image]){
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NSString stringWithFormat:@"%f", NSTimeIntervalSince1970], @"filename",
+                                           [NSString stringWithFormat:@"%d", 1000], @"size",
+                                           [NSString stringWithFormat:@"%d", 1], @"md5",
+                                           nil];
+        if([self objectID]){
+            [dictionary setObject:[self objectID] forKey:@"id"];
+        }
+        if([self.alAsset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo){
+            [dictionary setObject:@"video" forKey:@"type"];
+        }
+        return [NSDictionary dictionaryWithDictionary:dictionary];
+    }
     return nil;
 }
 
@@ -295,6 +312,9 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
     if ([self alAsset]) {
         UIImage *fullResolutionImage = [UIImage imageWithCGImage:[[[self alAsset] defaultRepresentation] fullResolutionImage] scale:1 orientation:[[[self alAsset] valueForProperty:ALAssetPropertyOrientation] intValue]];
         return [fullResolutionImage imageByScalingProportionallyToSize:CGSizeMake(width, height)];
+    }
+    else{
+        return image;
     }
     
     NSString *urlString = [self urlStringForImageWithWidth:width andHeight:height];
@@ -388,6 +408,7 @@ inBackgroundWithCompletion:(void (^)(UIImage *))aResponseBlock {
 - (void) dealloc {
     [parentID release];
     [alAsset release];
+    [image release];
     [super dealloc];
 }
 

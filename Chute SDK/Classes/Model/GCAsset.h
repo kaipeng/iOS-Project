@@ -29,6 +29,9 @@ typedef enum {
 
 @property (nonatomic, retain) ALAsset *alAsset;
 @property (nonatomic, retain) UIImage *thumbnail;
+@property (nonatomic, assign) UIImage *image;
+@property (nonatomic, assign) float compression;
+
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, assign) GCAssetStatus status;

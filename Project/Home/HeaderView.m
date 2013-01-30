@@ -135,7 +135,6 @@ static int mountainHeight;
     
     // Clouds
     UIImage *cloudsImage = [UIImage imageNamed:@"clouds_top.png"];
-    
     for (int i = -1; i < screenWidth/320*pageCount; i++) {
         UIImageView *imageViewCloud = [[UIImageView alloc]initWithImage:cloudsImage];
         imageViewCloud.contentMode = UIViewContentModeScaleToFill;
@@ -155,9 +154,7 @@ static int mountainHeight;
             [imageViewCloud setFrame:CGRectMake(imageViewCloud.frame.origin.x+320*1.5*headerSize, 0, 320*1.5*headerSize, 120*headerSize)];
             
         } completion:nil];
-        
         [self addSubview:imageViewCloud withAcceleration:CGPointMake(.7f, yAccel*.8)];
-        //[imageViewCloud release];
     }
     
     // initial content offset position

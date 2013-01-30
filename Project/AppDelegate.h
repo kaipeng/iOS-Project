@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "GetChute.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

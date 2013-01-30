@@ -21,30 +21,8 @@ NSString * const GCUploaderFinished = @"GCUploaderFinished";
 @synthesize queue = _queue;
 @synthesize progress;
 
-+ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute{
-    if(![[GCAccount sharedManager] assetsLibrary]){
-        ALAssetsLibrary *temp = [[ALAssetsLibrary alloc] init];
-        [[GCAccount sharedManager] setAssetsLibrary:temp];
-        [temp release];
-    }
-    ALAssetsLibrary *library = [[GCAccount sharedManager] assetsLibrary];
-    [library writeImageToSavedPhotosAlbum:[image CGImage] metadata:[NSDictionary dictionary] completionBlock:^(NSURL *assetURL, NSError *error){
-        if(!error){
-            [library assetForURL:assetURL resultBlock:^(ALAsset *asset){
-                GCAsset *temp = [[[GCAsset alloc] init] autorelease];
-                [temp setAlAsset:asset];
-                GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
-                [[GCUploader sharedUploader] addParcel:parcel];
-            } failureBlock:^(NSError *error){
-                NSLog(@"finding asset failed");
-            }];
-        }
-    }];
-}
-
-+ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute{
-    NSMutableArray *array = [NSMutableArray array];
-    for(id image in images){
++ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
+    if(!save){
         if(![[GCAccount sharedManager] assetsLibrary]){
             ALAssetsLibrary *temp = [[ALAssetsLibrary alloc] init];
             [[GCAccount sharedManager] setAssetsLibrary:temp];
@@ -56,16 +34,61 @@ NSString * const GCUploaderFinished = @"GCUploaderFinished";
                 [library assetForURL:assetURL resultBlock:^(ALAsset *asset){
                     GCAsset *temp = [[[GCAsset alloc] init] autorelease];
                     [temp setAlAsset:asset];
-                    [array addObject:temp];
-                    if([array count] == [images count]){
-                        GCParcel *parcel = [GCParcel objectWithAssets:array andChutes:[NSArray arrayWithObject:chute]];
-                        [[GCUploader sharedUploader] addParcel:parcel];
-                    }
+                    [temp setCompression:compression];
+                    GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
+                    [[GCUploader sharedUploader] addParcel:parcel];
                 } failureBlock:^(NSError *error){
                     NSLog(@"finding asset failed");
                 }];
             }
         }];
+    }else{
+        GCAsset *temp = [[[GCAsset alloc] init] autorelease];
+        [temp setImage:image];
+        [temp setCompression:compression];
+        GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
+        [[GCUploader sharedUploader] addParcel:parcel];
+    }
+}
+
++ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
+    NSMutableArray *array = [NSMutableArray array];
+    if(!save){
+        for(id image in images){
+            if(![[GCAccount sharedManager] assetsLibrary]){
+                ALAssetsLibrary *temp = [[ALAssetsLibrary alloc] init];
+                [[GCAccount sharedManager] setAssetsLibrary:temp];
+                [temp release];
+            }
+            ALAssetsLibrary *library = [[GCAccount sharedManager] assetsLibrary];
+            [library writeImageToSavedPhotosAlbum:[image CGImage] metadata:[NSDictionary dictionary] completionBlock:^(NSURL *assetURL, NSError *error){
+                if(!error){
+                    [library assetForURL:assetURL resultBlock:^(ALAsset *asset){
+                        GCAsset *temp = [[[GCAsset alloc] init] autorelease];
+                        [temp setAlAsset:asset];
+                        [temp setCompression:compression];
+                        [array addObject:temp];
+                        if([array count] == [images count]){
+                            GCParcel *parcel = [GCParcel objectWithAssets:array andChutes:[NSArray arrayWithObject:chute]];
+                            [[GCUploader sharedUploader] addParcel:parcel];
+                        }
+                    } failureBlock:^(NSError *error){
+                        NSLog(@"finding asset failed");
+                    }];
+                }
+            }];
+        }
+    }else{
+        for(id image in images){
+            GCAsset *temp = [[[GCAsset alloc] init] autorelease];
+            [temp setImage:image];
+            [temp setCompression:compression];
+            [array addObject:temp];
+            if([array count] == [images count]){
+                GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
+                [[GCUploader sharedUploader] addParcel:parcel];
+            }
+        }
     }
 }
 

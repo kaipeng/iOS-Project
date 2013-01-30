@@ -109,8 +109,8 @@ typedef enum {
 }
 
 //ARC Fix?
-@property (nonatomic, assign) __weak GCJsonStreamParserState *state; // Private
-//@property (nonatomic, assign) GCJsonStreamParserState *state; // Private
+//@property (nonatomic, assign) __weak GCJsonStreamParserState *state; // Private
+@property (nonatomic, assign) GCJsonStreamParserState *state; // Private
 @property (nonatomic, readonly, retain) NSMutableArray *stateStack; // Private
 
 /**

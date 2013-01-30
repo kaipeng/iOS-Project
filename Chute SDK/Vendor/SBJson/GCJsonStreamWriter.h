@@ -93,8 +93,8 @@
 }
 
 //ARC Fix?
-@property (nonatomic, assign) __weak GCJsonStreamWriterState *state; // Internal
-//@property (nonatomic, assign) GCJsonStreamWriterState *state; // Internal
+//@property (nonatomic, assign) __weak GCJsonStreamWriterState *state; // Internal
+@property (nonatomic, assign) GCJsonStreamWriterState *state; // Internal
 
 @property (nonatomic, readonly, retain) NSMutableArray *stateStack; // Internal 
 
