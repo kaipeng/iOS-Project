@@ -12,6 +12,7 @@
 #import "GCUser.h"
 #import "GCAccount.h"
 #import "GC_UIImage+Extras.h"
+#import "GCUploader.h"
 
 NSString * const GCParcelFinishedUploading  = @"GCParcelFinishedUploading";
 NSString * const GCParcelAssetsChanged      = @"GCParcelAssetsChanged";
@@ -123,6 +124,8 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
         NSDictionary *dict = [_asset uniqueRepresentation];
         if(dict)
             [_assetsUniqueDescription addObject:dict];
+        NSLog(@"uniqueDesciption dict in newParcel: %@", dict.description);
+
     }
     
     //Get all Chute IDs
@@ -145,8 +148,11 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
     
     NSString *_path = [[NSString alloc] initWithFormat:@"%@%@", API_URL, @"parcels"];
     
+    NSLog(@"newParcel Request: %@", params.description);
+
     GCRequest *gcRequest = [[GCRequest alloc] init];
     GCResponse *response = [[gcRequest postRequestWithPath:_path andParams:params] retain];
+    NSLog(@"newParcel Response: %@", response.description);
     
     [gcRequest release];
     [_path release];
@@ -171,7 +177,8 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
     if(![anAsset image]){
         _imageData = [UIImageJPEGRepresentation([UIImage imageWithCGImage:[[anAsset.alAsset defaultRepresentation] fullResolutionImage] scale:1 orientation:[[anAsset.alAsset valueForProperty:ALAssetPropertyOrientation] intValue]], compression) mutableCopy];
     }else{
-        _imageData = [UIImageJPEGRepresentation([anAsset image], compression) mutableCopy];
+        UIImage *aImage = [anAsset image];
+        _imageData = [UIImageJPEGRepresentation(aImage, compression) mutableCopy];
     }
     if(!_imageData && [anAsset objectID]){
         //Arc Fix
@@ -274,10 +281,12 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
     for (NSDictionary *_assetDetails in [self objectForKey:@"uploads"]) {
         [assetUrls addObject:[_assetDetails objectForKey:@"file_path"]];
     }
-    
+    NSLog(@"assetURLs: %@", assetUrls.description);
     NSMutableArray *assetsToRemove = [[NSMutableArray alloc] init];
     
     for (GCAsset *_asset in assets) {
+        NSLog(@"asset: uniqueURL: %@", [_asset uniqueURL]);
+        
         if ([assetUrls indexOfObject:[_asset uniqueURL]] != NSNotFound) {
             NSString *_id = [[[self objectForKey:@"uploads"] objectAtIndex:[assetUrls indexOfObject:[_asset uniqueURL]]] objectForKey:@"asset_id"];
             [_asset setObject:_id forKey:@"id"];
@@ -293,6 +302,9 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
         if([_asset status] == GCAssetStateFinished){
             [assetsToRemove addObject:_asset];
         }
+        NSLog(@"asset id: %@", [_asset objectForKey:@"id"]);
+        NSLog(@"asset id: %@", [_asset objectID]);
+
     }
     
     for (GCAsset *obj in assetsToRemove) {
@@ -357,7 +369,7 @@ NSString * const GCParcelNoUploads   = @"GCParcelNoUploads";
             while (![_response isSuccessful]) {
                 _response = [self completionRequestForAsset:_asset];
             }
-            
+            [GCUploader addToUploadHistory:_asset.uniqueURL uploadedAssetID:_asset.objectID];
         });
     }
 }

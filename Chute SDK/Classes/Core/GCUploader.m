@@ -8,6 +8,8 @@
 #import "GCUploader.h"
 
 static GCUploader *sharedUploader = nil;
+static NSDictionary *uploadHistory = nil;
+
 
 NSString * const GCUploaderProgressChanged = @"GCUploaderProgressChanged";
 NSString * const GCUploaderFinished = @"GCUploaderFinished";
@@ -21,8 +23,23 @@ NSString * const GCUploaderFinished = @"GCUploaderFinished";
 @synthesize queue = _queue;
 @synthesize progress;
 
-+ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
-    if(!save){
++(NSDictionary*) uploadHistory
+{
+    if (uploadHistory == nil)
+    {
+        uploadHistory = [NSDictionary alloc];
+    }
+    return uploadHistory;
+}
++ (void) addToUploadHistory:(NSString *)filename uploadedAssetID:(NSString *)assetID{
+    if(uploadHistory == nil) {
+       uploadHistory = [[NSDictionary alloc] initWithObjects:[NSArray arrayWithObject:assetID] forKeys:[NSArray arrayWithObject:filename]];
+    }
+}
+
+
++ (GCParcel*) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
+    if(save){
         if(![[GCAccount sharedManager] assetsLibrary]){
             ALAssetsLibrary *temp = [[ALAssetsLibrary alloc] init];
             [[GCAccount sharedManager] setAssetsLibrary:temp];
@@ -48,12 +65,14 @@ NSString * const GCUploaderFinished = @"GCUploaderFinished";
         [temp setCompression:compression];
         GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
         [[GCUploader sharedUploader] addParcel:parcel];
+        return parcel;
     }
+    return nil;
 }
 
-+ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
++ (GCParcel*) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression{
     NSMutableArray *array = [NSMutableArray array];
-    if(!save){
+    if(save){
         for(id image in images){
             if(![[GCAccount sharedManager] assetsLibrary]){
                 ALAssetsLibrary *temp = [[ALAssetsLibrary alloc] init];
@@ -87,9 +106,11 @@ NSString * const GCUploaderFinished = @"GCUploaderFinished";
             if([array count] == [images count]){
                 GCParcel *parcel = [GCParcel objectWithAssets:[NSArray arrayWithObject:temp] andChutes:[NSArray arrayWithObject:chute]];
                 [[GCUploader sharedUploader] addParcel:parcel];
+                return parcel;
             }
         }
-    }
+            }
+    return nil;
 }
 
 + (void) uploadAsset:(GCAsset*)asset toChute:(GCChute*)chute{

@@ -16,6 +16,9 @@
 #import "GCUploader.h"
 #import "MyLineDrawingView.h"
 
+#import <Parse/Parse.h>
+
+
 
 
 @interface PickerViewController : UIViewController <PhotoPickerPlusDelegate> {
@@ -23,7 +26,7 @@
     UIBarButtonItem *uploadButton;
     UIGestureRecognizer *tapGestureRecognizer;
     MyLineDrawingView *drawView;
-    
+    GCParcel *uploadParcel;
 }
 
 @property (strong) IBOutlet UIView *PBForeground;
@@ -34,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *galleryButton;
 @property (strong) GCChute *chute;
 @property (strong) GCChute *createdChute;
+@property (strong) UITextView *textView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *selectedImageView;
 
@@ -41,4 +45,6 @@
 +(UIImage*) drawText:(NSString*) text
              inImage:(UIImage*)  image
              atPoint:(CGPoint)   point;
+
+-(NSDictionary*)generateMetadata:(GCAsset*)asset withIndex:(int)index;
 @end

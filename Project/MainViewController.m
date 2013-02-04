@@ -35,7 +35,7 @@
         
         NSLog(@"Checking session validity.");
         // Create request for user's Facebook data
-        NSString *requestPath = @"me/?fields=name,location,email";
+        NSString *requestPath = @"me/?fields=name,location,email,picture.type(large)";
         
         PF_FBRequest *request = [PF_FBRequest requestForGraphPath:requestPath];
         [request startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
@@ -43,6 +43,14 @@
                 // handle successful response
                 // Push the next view controller without animation
                 NSLog(@"Session validated: %@ %@", [[PFUser currentUser] username], [[PFUser currentUser] email]);
+                NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
+                NSLog(@"User Info Retrieved: %@", userData.descriptionInStringsFileFormat);
+                [[PFUser currentUser] setEmail:userData[@"email"]];
+                [[PFUser currentUser] setObject:userData[@"location"][@"name"] forKey:@"location"];
+                [[PFUser currentUser] setObject:userData[@"picture"][@"data"][@"url"]  forKey:@"pictureURL"];
+                [[PFUser currentUser] save];
+
+                
                 NSLog(@"Pushing home screen.");
                 [self.navigationController pushViewController:[[FeedViewController alloc] init] animated:NO];
                 

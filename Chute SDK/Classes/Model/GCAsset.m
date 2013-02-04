@@ -218,9 +218,9 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
     }
     if([self image]){
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           [NSString stringWithFormat:@"%f", NSTimeIntervalSince1970], @"filename",
-                                           [NSString stringWithFormat:@"%d", 1000], @"size",
-                                           [NSString stringWithFormat:@"%d", 1], @"md5",
+                                           self.timeCreated, @"filename",
+                                           [NSString stringWithFormat:@"%d", arc4random() % 1000], @"size",
+                                           [NSString stringWithFormat:@"%d", arc4random() % 1000], @"md5",
                                            nil];
         if([self objectID]){
             [dictionary setObject:[self objectID] forKey:@"id"];
@@ -237,7 +237,11 @@ NSString * const GCAssetUploadComplete = @"GCAssetUploadComplete";
 //
 // Returns the filepath as given by the url of the alAsset
 - (NSString *) uniqueURL {
-    return [[[[self alAsset] defaultRepresentation] url] absoluteString];
+    if(image){
+        return self.timeCreated;
+    }else{
+        return [[[[self alAsset] defaultRepresentation] url] absoluteString];
+    }
 }
 
 #pragma mark - Upload
@@ -359,6 +363,7 @@ inBackgroundWithCompletion:(void (^)(UIImage *))aResponseBlock {
     self = [super init];
     if (self) {
         [self setStatus:GCAssetStateNew];
+        self.timeCreated = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
     }
     return  self;
 }
@@ -408,7 +413,7 @@ inBackgroundWithCompletion:(void (^)(UIImage *))aResponseBlock {
 - (void) dealloc {
     [parentID release];
     [alAsset release];
-    [image release];
+    //[image release];
     [super dealloc];
 }
 

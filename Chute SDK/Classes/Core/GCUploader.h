@@ -21,6 +21,7 @@ NSString * const GCUploaderFinished;
 @property (nonatomic, assign) CGFloat progress;
 
 + (GCUploader *)sharedUploader;
++ (NSDictionary *)uploadHistory;
 
 - (void) addParcel:(GCParcel *) _parcel;
 - (void) removeParcel:(GCParcel *) _parcel;
@@ -30,8 +31,10 @@ NSString * const GCUploaderFinished;
 - (void) backupQueueToUserDefaults;
 - (void) loadQueueFromUserDefaults;
 
-+ (void) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression;
-+ (void) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute:(Boolean)save withCompression:(float)compression;
++ (void) addToUploadHistory:(NSString *)filename uploadedAssetID:(NSString *)assetID;
+
++ (GCParcel*) uploadImage:(UIImage*)image toChute:(GCChute*)chute save:(Boolean)save withCompression:(float)compression;
++ (GCParcel*) uploadArrayOfImages:(NSArray*)images toChute:(GCChute*)chute:(Boolean)save withCompression:(float)compression;
 + (void) uploadAsset:(GCAsset*)asset toChute:(GCChute*)chute;
 + (void) uploadArrayOfAssets:(NSArray*)assets toChute:(GCChute*)chute;
 

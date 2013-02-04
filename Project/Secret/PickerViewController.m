@@ -32,6 +32,7 @@
     // Do any additional setup after loading the view from its nib.
     [self hideProgressIndicator];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressIndicator:) name:GCUploaderProgressChanged object:nil];
+
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
     self.navigationItem.leftBarButtonItem = backButton;
     uploadButton = [[UIBarButtonItem alloc] initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadPhoto)];
@@ -64,7 +65,8 @@
     if([[self selectedImageView] image] == nil)
         return;
     UIImage *editedImage = [PickerViewController drawDrawing:drawView inImage:[[self selectedImageView] image]];
-    [GCUploader uploadImage:editedImage toChute:chute save:NO withCompression:.05];
+    
+    uploadParcel = [GCUploader uploadImage:editedImage toChute:chute save:NO withCompression:.05];
     [uploadButton setEnabled:NO];
 }
 
@@ -139,6 +141,8 @@
 
 - (void) progressIndicator:(NSNotification *) notification {
     if ([[GCUploader sharedUploader] progress] > 0 && [[GCUploader sharedUploader] progress] < 1) {
+        //NSLog(@"Current asset ID: %@", [GCUploader sharedUploader] queue);
+        
         [self showProgressIndicator];
         
         [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
@@ -146,9 +150,52 @@
         } completion:^(BOOL finished) {}];
         return;
     }
+    GCAsset *asset;
+    for(asset in [uploadParcel assets]){
+        
+    }
+    [self setMetadata];
     [self hideProgressIndicator];
-    //[uploadButton setEnabled:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
+
+-(NSDictionary*)generateMetadata:(GCAsset*)asset withIndex:(int)index{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+                                                 [[PFUser currentUser] username], index, nil] forKeys:
+                          [NSArray arrayWithObjects:@"PARSE_USER_ID", @"PARCEL_INDEX", nil]];
+    return dict;
+}
+
+
+
+-(void)setMetadata{
+    GCResponse *response = [uploadParcel serverAssets];
+    if([response isSuccessful]){
+        NSArray *array = [response object];
+        
+        if(array.count == uploadParcel.assetCount){
+            GCAsset *asset;
+            int i = 0;
+            //LINK TO PARSE
+            // Create the post
+            PFObject *myPost = [PFObject objectWithClassName:@"Parcel"];
+            NSMutableArray *idArray = [NSMutableArray array];
+            //Add metaData to Chute
+            for(asset in [uploadParcel assets]){
+                [idArray addObject:asset.objectID];
+                [asset setMetaData:[self generateMetadata:asset withIndex:i++] inBackgroundWithCompletion:^(BOOL value) {
+
+                }];
+            }
+            [myPost setObject:self.textView.text forKey:@"text"];
+            [myPost setObject:idArray forKey:@"assetsList"];
+            //[PFUser currentUser] setObject:<#(id)#> forKey:<#(NSString *)#>
+            
+        }
+    }
+}
+
+
 
 -(void)popupSelector {
     PhotoPickerPlus *temp = [[PhotoPickerPlus alloc] init];

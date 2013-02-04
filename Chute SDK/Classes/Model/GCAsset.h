@@ -29,8 +29,11 @@ typedef enum {
 
 @property (nonatomic, retain) ALAsset *alAsset;
 @property (nonatomic, retain) UIImage *thumbnail;
-@property (nonatomic, assign) UIImage *image;
+
+@property (nonatomic, retain) UIImage *image;
 @property (nonatomic, assign) float compression;
+@property (nonatomic, retain) NSString *timeCreated;
+
 
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) CGFloat progress;
